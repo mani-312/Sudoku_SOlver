@@ -114,7 +114,7 @@ for i in range(9):
         y = i*height 
         roi = gray[y:y+height,x:x+width]
 
-        blurred = cv2.GaussianBlur(roi,(13,13),3)
+        blurred = cv2.GaussianBlur(roi,(15,15),3)
         
         thresh = cv2.adaptiveThreshold(blurred,255,
                                cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY_INV,11,2)
