@@ -7,7 +7,7 @@ from skimage.segmentation import clear_border
 from tensorflow.keras.models import load_model
 import imutils
 
-# Finds the digit in the image
+# Finds the digit component in the image
 def connected(gray):
     blurred = cv2.GaussianBlur(gray,(7,7),3)
     (T,thresh) = cv2.threshold(blurred,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
@@ -67,12 +67,12 @@ def solve(matrix,i,j):
     return (matrix,0)
 
 print("[Loading] model")
-model = load_model('model.h5')
+model = load_model('./digit_recognizer/model.h5')
 
 # Reading the image
-#img_path = 'sudoku1.png'
-img_path = 'sudoku2.png'
-#img_path = 'sudoku3.jpg'
+img_path = './sample_sudoku_images/sudoku1.png'
+#img_path = './sample_sudoku_images/sudoku2.png'
+#img_path = './sample_sudoku_images/sudoku3.jpg'
 img = cv2.imread(img_path)
 cv2.imshow('Original',img)
 
@@ -106,6 +106,7 @@ height = h//9
 width = w//9
 
 matrix = np.zeros((9,9),dtype='int')
+# Get each digit in image
 for i in range(9):
     cv2.imshow('Original',gray)
     for j in range(9):
@@ -123,7 +124,7 @@ for i in range(9):
         component = connected(input_digit)
         if component is None:
             continue
-
+	
         cv2.imshow('Thresholded_grid',np.hstack([roi,blurred,thresh,thresh_no_border]))
         cv2.imshow('Connected',component)
         
@@ -142,7 +143,7 @@ print("Sudoku :")
 print(matrix)
 cv2.imshow('Sudoku_grid',gray)
 (sol,flag) = solve(matrix.copy(),0,0)
-print("Sudoku_SOlved")
+print("Sudoku_Solved : ")
 print(sol)
 
 # Fill the sudoku grid with answer
