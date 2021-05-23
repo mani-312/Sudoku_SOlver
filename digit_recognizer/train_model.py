@@ -58,7 +58,7 @@ BS = 128
 # grab the MNIST dataset
 print("[INFO] accessing MNIST...")
 #((trainData, trainLabels), (testData, testLabels)) = mnist.load_data()
-data = np.load('./OCR/mnist.npz')
+data = np.load('mnist.npz')
 trainData = data['x_train']
 trainLabels = data['y_train']
 testData = data['x_test']
